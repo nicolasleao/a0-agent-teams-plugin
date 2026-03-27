@@ -7,7 +7,9 @@
   <script type="module">
     import { store } from "/plugins/agent_teams/webui/agent-team-store.js";
     import { generateAvatar } from "/plugins/agent_teams/webui/avatar.js";
+    import { renderMarkdown } from "/plugins/agent_teams/webui/markdown.js";
     window.__agentTeamAvatar = generateAvatar;
+    window.renderMarkdown = renderMarkdown;
   </script>
   <style>
     /* ================================================================ */
@@ -486,6 +488,70 @@
       font-size: 12px;
     }
 
+    /* Prompt preview cards */
+    .at-prompt-card {
+      background: var(--bg-secondary, rgba(255,255,255,0.03));
+      border: 1px solid var(--border-color, #333);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .at-prompt-card + .at-prompt-card { margin-top: 8px; }
+    .at-prompt-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border-color, #333);
+    }
+    .at-prompt-card-header code {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-color, #6495ed);
+      background: none;
+      padding: 0;
+    }
+    .at-prompt-card-body {
+      padding: 12px 16px;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .at-prompt-card-body::-webkit-scrollbar { width: 4px; }
+    .at-prompt-card-body::-webkit-scrollbar-track { background: transparent; }
+    .at-prompt-card-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+    .at-prompt-card-body::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+    /* Lightweight markdown rendering */
+    .at-md { font-size: 13px; line-height: 1.6; color: var(--text-color, #ddd); }
+    .at-md h1, .at-md h2, .at-md h3, .at-md h4, .at-md h5, .at-md h6 {
+      margin: 14px 0 6px; font-weight: 600; color: var(--text-color, #eee); line-height: 1.3;
+    }
+    .at-md h1:first-child, .at-md h2:first-child, .at-md h3:first-child { margin-top: 0; }
+    .at-md h1 { font-size: 17px; } .at-md h2 { font-size: 15px; } .at-md h3 { font-size: 14px; }
+    .at-md h4 { font-size: 13px; } .at-md h5, .at-md h6 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .at-md p { margin: 6px 0; }
+    .at-md p:first-child { margin-top: 0; }
+    .at-md strong { font-weight: 600; color: var(--text-color, #eee); }
+    .at-md em { font-style: italic; }
+    .at-md a { color: var(--accent-color, #6495ed); text-decoration: none; }
+    .at-md a:hover { text-decoration: underline; }
+    .at-md code {
+      font-family: monospace; font-size: 12px;
+      background: rgba(255,255,255,0.07); padding: 1px 5px; border-radius: 3px;
+    }
+    .at-md pre {
+      background: rgba(0,0,0,0.25); border-radius: 6px; padding: 10px 12px;
+      margin: 8px 0; overflow-x: auto;
+    }
+    .at-md pre code {
+      background: none; padding: 0; font-size: 12px; line-height: 1.5;
+      color: var(--text-muted, #bbb);
+    }
+    .at-md ul, .at-md ol { margin: 6px 0; padding-left: 20px; }
+    .at-md li { margin: 2px 0; }
+    .at-md hr { border: none; border-top: 1px solid var(--border-color, #444); margin: 12px 0; }
+
     /* Forms */
     .at-form { display: flex; flex-direction: column; gap: 12px; }
     .at-form-group {
@@ -768,16 +834,16 @@
                       <div class="at-section-content" x-text="$store.agentTeamStore.selectedAgent.context"></div>
                     </div>
 
-                    <div class="at-section" x-show="$store.agentTeamStore.selectedAgent.prompts?.length">
+                    <div class="at-section" x-show="$store.agentTeamStore.selectedPromptEntries.length">
                       <div class="at-section-label">Prompts</div>
-                      <div class="at-section-content">
-                        <template x-for="prompt in $store.agentTeamStore.selectedAgent.prompts" :key="prompt.name">
-                          <div>
-                            <strong x-text="prompt.name + ':'"></strong>
-                            <code x-text="prompt.slug"></code>
+                      <template x-for="entry in $store.agentTeamStore.selectedPromptEntries" :key="entry[0]">
+                        <div class="at-prompt-card">
+                          <div class="at-prompt-card-header">
+                            <code x-text="entry[0]"></code>
                           </div>
-                        </template>
-                      </div>
+                          <div class="at-prompt-card-body at-md" x-html="renderMarkdown(entry[1])"></div>
+                        </div>
+                      </template>
                     </div>
 
                     <!-- Origin info -->
