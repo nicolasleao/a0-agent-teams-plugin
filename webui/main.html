@@ -962,20 +962,44 @@
                         <label>Name</label>
                         <input type="text" :value="$store.agentTeamStore.selectedAgent.name" disabled
                           style="opacity:0.6; cursor:not-allowed;">
+                      <div class="at-form-group">
+                        <label>Name</label>
+                        <input type="text" :value="$store.agentTeamStore.selectedAgent.name" disabled
+                          style="opacity:0.6; cursor:not-allowed;">
                       </div>
 
-                      <div class="at-form-group">
+                      <!-- Title toggle -->
+                      <button 
+                        type="button" 
+                        x-show="!showTitleField"
+                        @click="showTitleField = true"
+                        class="at-btn at-btn-ghost at-btn-sm"
+                        style="align-self: flex-start; margin: -8px 0 8px 0;"
+                      >
+                        <span class="material-symbols-outlined">add</span> title
+                      </button>
+                      <div class="at-form-group" x-show="showTitleField">
                         <label>Title <span style="color:var(--text-muted,#666);">(optional)</span></label>
                         <input type="text" x-model="$store.agentTeamStore.form.title">
                       </div>
 
-                      <div class="at-form-group">
+                      <!-- Description toggle -->
+                      <button 
+                        type="button" 
+                        x-show="!showDescriptionField"
+                        @click="showDescriptionField = true"
+                        class="at-btn at-btn-ghost at-btn-sm"
+                        style="align-self: flex-start; margin: -8px 0 8px 0;"
+                      >
+                        <span class="material-symbols-outlined">add</span> description
+                      </button>
+                      <div class="at-form-group" x-show="showDescriptionField">
                         <label>Description <span style="color:var(--text-muted,#666);">(optional)</span></label>
                         <textarea x-model="$store.agentTeamStore.form.description"></textarea>
                       </div>
 
                       <div class="at-form-group">
-                        <label>Context <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <label>Context <span style="color:var(--text-muted,#666);">(when to use this agent)</span></label>
                         <textarea x-model="$store.agentTeamStore.form.context"></textarea>
                       </div>
 
@@ -1027,7 +1051,8 @@
         currentPage: 1,
         projectsPerPage: 5,
         showAllProjects: false, // Default: hide empty projects
-
+        showTitleField: false, // Default: hide title input in edit form
+        showDescriptionField: false, // Default: hide description input in edit form
         get projectTeams() {
           if (!this.$store?.agentTeamStore?.teams) return [];
           return this.$store.agentTeamStore.teams
