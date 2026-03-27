@@ -1,0 +1,7 @@
+name: agent_teams
+title: Agent Teams
+description: Manage agent profiles across teams - built-in, global, and per-project scopes with procedural avatars.
+version: 1.1.0
+settings_sections: []
+per_project_config: false
+per_agent_config: false
