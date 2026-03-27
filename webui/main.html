@@ -41,6 +41,8 @@
     .at-btn-danger:hover { background: rgba(231,76,60,0.1); }
     .at-btn-sm { padding: 4px 8px; font-size: 11px; }
     .at-btn-sm .material-symbols-outlined { font-size: 14px; }
+    .at-btn-ghost { background: transparent; color: var(--text-muted, #888); }
+    .at-btn-ghost:hover { color: var(--text-color, #ddd); }
 
     /* Origin/scope badges */
     .at-badge {
@@ -60,118 +62,276 @@
     .badge-readonly { background: rgba(150,150,150,0.15); color: #999; }
 
     /* ================================================================ */
-    /*  TEAMS VIEW                                                      */
+    /*  TEAMS VIEW - NEW CLEAN DESIGN                                   */
     /* ================================================================ */
     .at-teams {
       min-height: 300px;
+      padding: 8px 4px;
     }
 
-    .at-teams-header {
+    /* Hero Cards - Default & Global side by side */
+    .at-hero-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .at-hero-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid var(--border-color, #333);
+      background: var(--bg-secondary, rgba(255,255,255,0.02));
+      text-align: center;
+    }
+
+    .at-hero-card:hover {
+      background: var(--bg-hover, rgba(255,255,255,0.05));
+      border-color: var(--accent-color, #6495ed);
+      transform: translateY(-2px);
+    }
+
+    .at-hero-icon {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
     }
 
-    .at-teams-header h3 {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 600;
+    .at-hero-icon .material-symbols-outlined {
+      font-size: 36px;
+    }
+
+    .at-hero-icon-default { background: rgba(150,150,150,0.15); color: #aaa; }
+    .at-hero-icon-user { background: rgba(100,149,237,0.15); color: #6495ed; }
+
+    .at-hero-title {
+      font-size: 18px;
+      font-weight: 700;
       color: var(--text-color, #eee);
     }
 
-    .at-teams-header .at-teams-subtitle {
-      font-size: 12px;
+    .at-hero-meta {
+      font-size: 13px;
       color: var(--text-muted, #888);
-      margin-left: auto;
     }
 
-    .at-teams-grid {
+    /* Explanation text */
+    .at-explanation {
+      text-align: center;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      color: var(--text-muted, #888);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .at-explanation strong {
+      color: var(--text-color, #ddd);
+      font-weight: 600;
+    }
+
+    /* Search bar */
+    .at-search-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .at-search-input {
+      flex: 1;
+      background: var(--bg-input, rgba(255,255,255,0.05));
+      border: 1px solid var(--border-color, #444);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text-color, #eee);
+      outline: none;
+    }
+
+    .at-search-input:focus {
+      border-color: var(--accent-color, #6495ed);
+    }
+
+    .at-search-input::placeholder {
+      color: var(--text-muted, #666);
+    }
+
+    /* Project section header */
+    .at-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .at-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted, #666);
+      letter-spacing: 0.5px;
+    }
+
+    .at-section-count {
+      font-size: 11px;
+      color: var(--text-muted, #888);
+    }
+
+    /* Compact project cards */
+    .at-projects-list {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .at-team-card {
+    .at-project-card {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 12px 14px;
       border-radius: 10px;
       cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
+      transition: all 0.15s;
       border: 1px solid var(--border-color, #333);
       background: var(--bg-secondary, rgba(255,255,255,0.02));
     }
 
-    .at-team-card:hover {
+    .at-project-card:hover {
       background: var(--bg-hover, rgba(255,255,255,0.05));
       border-color: var(--accent-color, #6495ed);
     }
 
-    .at-team-icon {
+    .at-project-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       flex-shrink: 0;
+      background: rgba(46,204,113,0.15);
+      color: #2ecc71;
     }
 
-    .at-team-icon .material-symbols-outlined {
-      font-size: 22px;
+    .at-project-icon .material-symbols-outlined {
+      font-size: 18px;
     }
 
-    .at-team-icon-default { background: rgba(150,150,150,0.15); color: #aaa; }
-    .at-team-icon-plugin { background: rgba(155,89,182,0.15); color: #9b59b6; }
-    .at-team-icon-user { background: rgba(100,149,237,0.15); color: #6495ed; }
-    .at-team-icon-project { background: rgba(46,204,113,0.15); color: #2ecc71; }
-
-    .at-team-info {
+    .at-project-info {
       flex: 1;
       min-width: 0;
     }
 
-    .at-team-title {
-      font-size: 13px;
+    .at-project-title {
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-color, #eee);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .at-team-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 2px;
-    }
-
-    .at-team-count {
-      font-size: 11px;
+    .at-project-agents {
+      font-size: 12px;
       color: var(--text-muted, #888);
     }
 
-    .at-team-arrow {
+    .at-project-arrow {
       flex-shrink: 0;
       color: var(--text-muted, #666);
       font-size: 18px;
     }
 
-    .at-teams-separator {
-      border: none;
+    /* Empty state */
+    .at-empty-projects {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-muted, #888);
+      font-size: 13px;
+    }
+
+    /* Pagination */
+    .at-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 12px;
       border-top: 1px solid var(--border-color, #333);
-      margin: 6px 0;
     }
 
-    .at-teams-section-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: var(--text-muted, #666);
-      letter-spacing: 0.5px;
-      padding: 4px 0;
+    .at-page-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color, #444);
+      background: transparent;
+      color: var(--text-color, #ddd);
+      cursor: pointer;
+      transition: all 0.15s;
     }
 
+    .at-page-btn:hover:not(:disabled) {
+      background: var(--bg-hover, rgba(255,255,255,0.05));
+      border-color: var(--accent-color, #6495ed);
+    }
+
+    .at-page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .at-page-btn .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .at-page-info {
+      font-size: 12px;
+      color: var(--text-muted, #888);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* See all projects button */
+    .at-see-all-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 20px auto 0;
+      padding: 8px 16px;
+      border: 1px solid var(--border-color, #444);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted, #888);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .at-see-all-btn:hover {
+      background: var(--bg-hover, rgba(255,255,255,0.05));
+      color: var(--text-color, #ddd);
+      border-color: var(--accent-color, #6495ed);
+    }
+
+    .at-see-all-btn .material-symbols-outlined {
+      font-size: 16px;
+    }
     /* ================================================================ */
     /*  AGENTS VIEW (two-panel)                                         */
     /* ================================================================ */
@@ -390,93 +550,129 @@
       .at-agents-panels { flex-direction: column; }
       .at-list-panel { flex: 0 0 auto; max-height: 200px; }
       .at-detail-panel { border-left: none; padding-left: 0; border-top: 1px solid var(--border-color, #333); padding-top: 12px; }
+      .at-hero-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div x-data>
+  <div x-data="teamsView()">
     <template x-if="$store.agentTeamStore">
       <div x-create="$store.agentTeamStore.onOpen()" x-destroy="$store.agentTeamStore.cleanup()">
 
         <!-- ================================================================ -->
-        <!--  TEAMS VIEW                                                       -->
+        <!--  TEAMS VIEW - NEW CLEAN DESIGN                                   -->
         <!-- ================================================================ -->
         <template x-if="$store.agentTeamStore.currentView === 'teams'">
           <div class="at-teams">
 
-            <!-- Header -->
-            <div class="at-teams-header">
-              <span class="material-symbols-outlined" style="font-size:20px; color:var(--text-muted,#888);">groups</span>
-              <h3>Agent Teams</h3>
-              <span class="at-teams-subtitle"
-                x-text="$store.agentTeamStore.teams.length + ' team' + ($store.agentTeamStore.teams.length !== 1 ? 's' : '')"></span>
-            </div>
-
             <!-- Loading -->
             <div x-show="$store.agentTeamStore.loadingTeams" class="at-loading">Loading teams...</div>
 
-            <!-- Teams list -->
-            <div x-show="!$store.agentTeamStore.loadingTeams" class="at-teams-grid">
+            <div x-show="!$store.agentTeamStore.loadingTeams">
 
-              <!-- System teams (default + plugin) -->
-              <template x-for="team in $store.agentTeamStore.teams.filter(t => t.scope === 'default' || t.scope === 'plugin')" :key="team.id">
-                <div class="at-team-card" @click="$store.agentTeamStore.selectTeam(team)">
-                  <div class="at-team-icon" :class="'at-team-icon-' + team.scope">
-                    <span class="material-symbols-outlined" x-text="$store.agentTeamStore.teamIcon(team)"></span>
-                  </div>
-                  <div class="at-team-info">
-                    <div class="at-team-title" x-text="team.title"></div>
-                    <div class="at-team-meta">
-                      <span class="at-team-count" x-text="team.agent_count + ' agent' + (team.agent_count !== 1 ? 's' : '')"></span>
-                      <span class="at-badge badge-readonly" x-text="$store.agentTeamStore.teamScopeLabel(team)"></span>
+              <!-- Hero Cards: Default & Global side by side -->
+              <div class="at-hero-cards">
+                <!-- Default Team -->
+                <template x-for="team in $store.agentTeamStore.teams.filter(t => t.scope === 'default')" :key="team.id">
+                  <div class="at-hero-card" @click="$store.agentTeamStore.selectTeam(team)">
+                    <div class="at-hero-icon at-hero-icon-default">
+                      <span class="material-symbols-outlined">smart_toy</span>
+                    </div>
+                    <div class="at-hero-title" x-text="team.title"></div>
+                    <div class="at-hero-meta">
+                      <span x-text="team.agent_count + ' built-in agent' + (team.agent_count !== 1 ? 's' : '')"></span>
                     </div>
                   </div>
-                  <span class="at-team-arrow material-symbols-outlined">chevron_right</span>
-                </div>
-              </template>
+                </template>
 
-              <!-- Global team -->
-              <template x-for="team in $store.agentTeamStore.teams.filter(t => t.scope === 'user')" :key="team.id">
-                <div class="at-team-card" @click="$store.agentTeamStore.selectTeam(team)">
-                  <div class="at-team-icon at-team-icon-user">
-                    <span class="material-symbols-outlined" x-text="$store.agentTeamStore.teamIcon(team)"></span>
-                  </div>
-                  <div class="at-team-info">
-                    <div class="at-team-title" x-text="team.title"></div>
-                    <div class="at-team-meta">
-                      <span class="at-team-count" x-text="team.agent_count + ' agent' + (team.agent_count !== 1 ? 's' : '')"></span>
-                      <span class="at-badge badge-mutable" x-text="$store.agentTeamStore.teamScopeLabel(team)"></span>
+                <!-- Global Team -->
+                <template x-for="team in $store.agentTeamStore.teams.filter(t => t.scope === 'user')" :key="team.id">
+                  <div class="at-hero-card" @click="$store.agentTeamStore.selectTeam(team)">
+                    <div class="at-hero-icon at-hero-icon-user">
+                      <span class="material-symbols-outlined">public</span>
+                    </div>
+                    <div class="at-hero-title" x-text="team.title"></div>
+                    <div class="at-hero-meta">
+                      <span x-text="team.agent_count + ' custom agent' + (team.agent_count !== 1 ? 's' : '')"></span>
+                      <span class="at-badge badge-mutable" style="margin-left:6px;">editable</span>
                     </div>
                   </div>
-                  <span class="at-team-arrow material-symbols-outlined">chevron_right</span>
-                </div>
-              </template>
+                </template>
+              </div>
 
-              <!-- Project teams section -->
-              <template x-if="$store.agentTeamStore.teams.filter(t => t.scope === 'project').length > 0">
-                <div>
-                  <hr class="at-teams-separator" />
-                  <div class="at-teams-section-label">Projects</div>
-                </div>
-              </template>
+              <!-- Concise explanation -->
+              <div class="at-explanation">
+                Create a <strong>separate team per project</strong> to organize agents by workspace
+              </div>
 
-              <template x-for="team in $store.agentTeamStore.teams.filter(t => t.scope === 'project')" :key="team.id">
-                <div class="at-team-card" @click="$store.agentTeamStore.selectTeam(team)">
-                  <div class="at-team-icon at-team-icon-project"
-                    :style="team.color ? 'background:' + team.color + '22; color:' + team.color : ''">
-                    <span class="material-symbols-outlined">folder</span>
-                  </div>
-                  <div class="at-team-info">
-                    <div class="at-team-title" x-text="team.title"></div>
-                    <div class="at-team-meta">
-                      <span class="at-team-count" x-text="team.agent_count + ' agent' + (team.agent_count !== 1 ? 's' : '')"></span>
-                      <span class="at-badge badge-mutable" x-text="$store.agentTeamStore.teamScopeLabel(team)"></span>
+              <!-- Project Teams Section -->
+              <div x-show="projectTeams.length > 0">
+                <!-- Search bar -->
+                <div class="at-search-row">
+                  <input
+                    type="text"
+                    class="at-search-input"
+                    placeholder="Search projects..."
+                    x-model="searchQuery"
+                  />
+                </div>
+
+                <!-- Section header -->
+                <div class="at-section-header">
+                  <span class="at-section-title">Project Teams</span>
+                  <span class="at-section-count">
+                    <span x-text="filteredProjects.length"></span> project<span x-show="filteredProjects.length !== 1">s</span>
+                  </span>
+                </div>
+
+                <!-- Project list -->
+                <div class="at-projects-list">
+                  <template x-for="team in paginatedProjects" :key="team.id">
+                    <div class="at-project-card" @click="$store.agentTeamStore.selectTeam(team)">
+                      <div class="at-project-icon"
+                        :style="team.color ? 'background:' + team.color + '22; color:' + team.color : ''">
+                        <span class="material-symbols-outlined">folder</span>
+                      </div>
+                      <div class="at-project-info">
+                        <div class="at-project-title" x-text="team.title"></div>
+                        <div class="at-project-agents" x-text="team.agent_count + ' agent' + (team.agent_count !== 1 ? 's' : '')"></div>
+                      </div>
+                      <span class="at-project-arrow material-symbols-outlined">chevron_right</span>
                     </div>
-                  </div>
-                  <span class="at-team-arrow material-symbols-outlined">chevron_right</span>
+                  </template>
                 </div>
-              </template>
+
+                <!-- Empty search result -->
+                <div x-show="filteredProjects.length === 0 && searchQuery" class="at-empty-projects">
+                  No projects match "<span x-text="searchQuery"></span>"
+                </div>
+
+                <!-- See all projects button (only when hiding empty projects) -->
+                <button
+                  x-show="!showAllProjects && hasEmptyProjects"
+                  class="at-see-all-btn"
+                  @click="toggleShowAll()"
+                >
+                  <span class="material-symbols-outlined">expand_more</span>
+                  See all projects
+                </button>
+
+                <!-- Show only active button (when showing all) -->
+                <button
+                  x-show="showAllProjects"
+                  class="at-see-all-btn"
+                  @click="toggleShowAll()"
+                >
+                  <span class="material-symbols-outlined">expand_less</span>
+                  Show only active projects
+                </button>
+
+              <!-- No projects yet -->
+              <div x-show="projectTeams.length === 0" class="at-empty-projects">
+                No project teams yet. Create a project to get started.
+              </div>
+
             </div>
           </div>
         </template>
@@ -596,75 +792,127 @@
                   </div>
                 </template>
 
-                <!-- ===== CREATE / EDIT MODE ===== -->
-                <template x-if="$store.agentTeamStore.editMode === 'create' || $store.agentTeamStore.editMode === 'edit'">
-                  <div class="at-form">
-                    <h3 x-text="$store.agentTeamStore.editMode === 'create' ? 'Create New Agent' : 'Edit Agent'" style="margin:0;"></h3>
+                <!-- ===== CREATE MODE ===== -->
+                <template x-if="$store.agentTeamStore.editMode === 'create'">
+                  <div>
+                    <h3 style="margin:0 0 12px; font-size:16px; color:var(--text-color,#eee);">Create Agent</h3>
 
-                    <div class="at-form-group" x-show="$store.agentTeamStore.editMode === 'create'">
-                      <label>Name (slug)</label>
-                      <input type="text" x-model="$store.agentTeamStore.form.name"
-                        placeholder="my_agent_name"
-                        @input="$store.agentTeamStore.form.name = $store.agentTeamStore.slugify($store.agentTeamStore.form.name)" />
-                      <div class="at-slug-preview" x-show="$store.agentTeamStore.form.name">
-                        Will be saved as: <strong x-text="$store.agentTeamStore.form.name"></strong>
+                    <form class="at-form" @submit.prevent="$store.agentTeamStore.saveCreate()">
+                      <div class="at-form-group">
+                        <label>Agent Name</label>
+                        <input type="text" x-model="$store.agentTeamStore.form.name"
+                          placeholder="e.g., code-reviewer"
+                          @input="$store.agentTeamStore.updateSlugPreview()">
+                        <div class="at-slug-preview" x-show="$store.agentTeamStore.slugPreview"
+                          x-text="'Will be saved as: ' + $store.agentTeamStore.slugPreview"></div>
                       </div>
-                    </div>
 
-                    <div class="at-form-group">
-                      <label>Title</label>
-                      <input type="text" x-model="$store.agentTeamStore.form.title" placeholder="Agent display name" />
-                    </div>
-
-                    <div class="at-form-group">
-                      <label>Description</label>
-                      <textarea x-model="$store.agentTeamStore.form.description" placeholder="Short description..." rows="2"></textarea>
-                    </div>
-
-                    <div class="at-form-group">
-                      <label>Context</label>
-                      <textarea x-model="$store.agentTeamStore.form.context" placeholder="When should this agent be used?" rows="3"></textarea>
-                    </div>
-
-                    <div class="at-form-group">
-                      <label>Prompt Files</label>
-                      <div class="at-prompt-form-header">
-                        <input type="text" x-model="$store.agentTeamStore.newPromptName"
-                          placeholder="filename.md"
-                          @keyup.enter="$store.agentTeamStore.addPrompt()" />
-                        <button class="at-btn at-btn-secondary at-btn-sm" @click="$store.agentTeamStore.addPrompt()">
-                          <span class="material-symbols-outlined">add</span> Add
-                        </button>
+                      <div class="at-form-group">
+                        <label>Title <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <input type="text" x-model="$store.agentTeamStore.form.title"
+                          placeholder="e.g., Code Reviewer">
                       </div>
-                      <template x-for="[name, content] in $store.agentTeamStore.promptEntries" :key="name">
-                        <div class="at-prompt-edit-item">
-                          <div class="at-prompt-edit-header">
-                            <span x-text="name"></span>
-                            <button class="at-btn at-btn-danger at-btn-sm" @click="$store.agentTeamStore.removePrompt(name)">
-                              <span class="material-symbols-outlined">close</span>
-                            </button>
-                          </div>
-                          <textarea class="at-prompt-textarea"
-                            :value="content"
-                            @input="$store.agentTeamStore.updatePromptContent(name, $event.target.value)"
-                            placeholder="Prompt content (markdown)..."
-                            rows="4"
-                            style="width:100%;box-sizing:border-box;"></textarea>
+
+                      <div class="at-form-group">
+                        <label>Description <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <textarea x-model="$store.agentTeamStore.form.description"
+                          placeholder="What this agent does..."></textarea>
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Context <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <textarea x-model="$store.agentTeamStore.form.context"
+                          placeholder="Additional context for this agent..."></textarea>
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Prompts</label>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                          <template x-for="(prompt, index) in $store.agentTeamStore.form.prompts" :key="index">
+                            <div class="at-prompt-edit-item">
+                              <div class="at-prompt-edit-header">
+                                <input type="text" x-model="prompt.name" placeholder="prompt_name.md">
+                                <button type="button" class="at-btn at-btn-danger at-btn-sm"
+                                  @click="$store.agentTeamStore.removePrompt(index)">
+                                  <span class="material-symbols-outlined">delete</span>
+                                </button>
+                              </div>
+                              <textarea class="at-prompt-textarea" x-model="prompt.content"
+                                placeholder="Enter prompt content..."></textarea>
+                            </div>
+                          </template>
+                          <button type="button" class="at-btn at-btn-secondary at-btn-sm"
+                            @click="$store.agentTeamStore.addPrompt()">
+                            <span class="material-symbols-outlined">add</span> Add Prompt
+                          </button>
                         </div>
-                      </template>
-                    </div>
+                      </div>
 
-                    <div class="at-form-actions">
-                      <button class="at-btn at-btn-primary"
-                        @click="$store.agentTeamStore.saveAgent()"
-                        :disabled="$store.agentTeamStore.loading">
-                        <span class="material-symbols-outlined">save</span>
-                        <span x-text="$store.agentTeamStore.loading ? 'Saving...' : 'Save Agent'"></span>
-                      </button>
-                      <button class="at-btn at-btn-secondary" @click="$store.agentTeamStore.cancelEdit()">
-                        Cancel
-                      </button>
-                    </div>
+                      <div class="at-form-actions">
+                        <button type="submit" class="at-btn at-btn-primary">Create</button>
+                        <button type="button" class="at-btn at-btn-secondary"
+                          @click="$store.agentTeamStore.cancelEdit()">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                </template>
+
+                <!-- ===== EDIT MODE ===== -->
+                <template x-if="$store.agentTeamStore.editMode === 'edit'">
+                  <div>
+                    <h3 style="margin:0 0 12px; font-size:16px; color:var(--text-color,#eee);">Edit Agent</h3>
+
+                    <form class="at-form" @submit.prevent="$store.agentTeamStore.saveEdit()">
+                      <div class="at-form-group">
+                        <label>Name</label>
+                        <input type="text" :value="$store.agentTeamStore.selectedAgent.name" disabled
+                          style="opacity:0.6; cursor:not-allowed;">
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Title <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <input type="text" x-model="$store.agentTeamStore.form.title">
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Description <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <textarea x-model="$store.agentTeamStore.form.description"></textarea>
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Context <span style="color:var(--text-muted,#666);">(optional)</span></label>
+                        <textarea x-model="$store.agentTeamStore.form.context"></textarea>
+                      </div>
+
+                      <div class="at-form-group">
+                        <label>Prompts</label>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                          <template x-for="(prompt, index) in $store.agentTeamStore.form.prompts" :key="index">
+                            <div class="at-prompt-edit-item">
+                              <div class="at-prompt-edit-header">
+                                <input type="text" x-model="prompt.name" placeholder="prompt_name.md">
+                                <button type="button" class="at-btn at-btn-danger at-btn-sm"
+                                  @click="$store.agentTeamStore.removePrompt(index)">
+                                  <span class="material-symbols-outlined">delete</span>
+                                </button>
+                              </div>
+                              <textarea class="at-prompt-textarea" x-model="prompt.content"
+                                placeholder="Enter prompt content..."></textarea>
+                            </div>
+                          </template>
+                          <button type="button" class="at-btn at-btn-secondary at-btn-sm"
+                            @click="$store.agentTeamStore.addPrompt()">
+                            <span class="material-symbols-outlined">add</span> Add Prompt
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="at-form-actions">
+                        <button type="submit" class="at-btn at-btn-primary">Save Changes</button>
+                        <button type="button" class="at-btn at-btn-secondary"
+                          @click="$store.agentTeamStore.cancelEdit()">Cancel</button>
+                      </div>
+                    </form>
                   </div>
                 </template>
 
@@ -676,6 +924,68 @@
       </div>
     </template>
   </div>
+
+  <script>
+    function teamsView() {
+      return {
+        searchQuery: '',
+        currentPage: 1,
+        projectsPerPage: 5,
+        showAllProjects: false, // Default: hide empty projects
+
+        get projectTeams() {
+          if (!this.$store?.agentTeamStore?.teams) return [];
+          return this.$store.agentTeamStore.teams
+            .filter(t => t.scope === 'project')
+            .sort((a, b) => b.agent_count - a.agent_count); // Sort by agent count, most first
+        },
+
+        get hasEmptyProjects() {
+          return this.projectTeams.some(p => p.agent_count === 0);
+        },
+
+        get filteredProjects() {
+          let projects = this.projectTeams;
+          
+          // Filter out empty projects unless showing all
+          if (!this.showAllProjects) {
+            projects = projects.filter(p => p.agent_count > 0);
+          }
+          
+          // Apply search filter
+          if (this.searchQuery.trim()) {
+            const query = this.searchQuery.toLowerCase();
+            projects = projects.filter(p => p.title.toLowerCase().includes(query));
+          }
+          
+          return projects;
+        },
+
+        get paginatedProjects() {
+          const start = (this.currentPage - 1) * this.projectsPerPage;
+          const end = start + this.projectsPerPage;
+          return this.filteredProjects.slice(start, end);
+        },
+
+        get totalPages() {
+          return Math.ceil(this.filteredProjects.length / this.projectsPerPage) || 1;
+        },
+
+        toggleShowAll() {
+          this.showAllProjects = !this.showAllProjects;
+          this.currentPage = 1; // Reset to first page
+        },
+
+        // Reset to page 1 when search changes
+        init() {
+          this.$watch('searchQuery', () => {
+            this.currentPage = 1;
+          });
+        }
+      }
+    }
+  </script>
+  </script>
 </body>
 
 </html>
