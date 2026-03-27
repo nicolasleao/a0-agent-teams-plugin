@@ -2,6 +2,8 @@
 
 <head>
   <title>Agent Teams</title>
+  <!-- Load Pixeloids as regular script (UMD, creates window.Pixeloids) -->
+  <script src="/plugins/agent_teams/webui/pixeloids.js"></script>
   <script type="module">
     import { store } from "/plugins/agent_teams/webui/agent-team-store.js";
     import { generateAvatar } from "/plugins/agent_teams/webui/avatar.js";
@@ -332,6 +334,7 @@
     .at-see-all-btn .material-symbols-outlined {
       font-size: 16px;
     }
+
     /* ================================================================ */
     /*  AGENTS VIEW (two-panel)                                         */
     /* ================================================================ */
@@ -475,38 +478,25 @@
       line-height: 1.5;
       white-space: pre-wrap;
     }
-
-    .at-prompts-list { display: flex; flex-direction: column; gap: 8px; }
-    .at-prompt-item {
-      background: var(--bg-secondary, rgba(255,255,255,0.03));
-      border-radius: 6px;
-      padding: 8px 12px;
-    }
-    .at-prompt-item .at-prompt-name {
+    .at-section-content code {
       font-family: monospace;
+      background: var(--bg-tertiary, rgba(255,255,255,0.05));
+      padding: 2px 4px;
+      border-radius: 3px;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--accent-color, #6495ed);
-      margin-bottom: 4px;
-    }
-    .at-prompt-item .at-prompt-content {
-      font-size: 12px;
-      color: var(--text-muted, #999);
-      max-height: 80px;
-      overflow: hidden;
-      white-space: pre-wrap;
-      line-height: 1.4;
     }
 
-    /* Form */
+    /* Forms */
     .at-form { display: flex; flex-direction: column; gap: 12px; }
-    .at-form-group { display: flex; flex-direction: column; gap: 4px; }
+    .at-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
     .at-form-group label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      text-transform: uppercase;
-      color: var(--text-muted, #888);
-      letter-spacing: 0.5px;
+      color: var(--text-color, #ddd);
     }
     .at-form-group input[type="text"],
     .at-form-group textarea {
@@ -778,16 +768,28 @@
                       <div class="at-section-content" x-text="$store.agentTeamStore.selectedAgent.context"></div>
                     </div>
 
-                    <div class="at-section" x-show="$store.agentTeamStore.selectedPromptEntries.length > 0">
+                    <div class="at-section" x-show="$store.agentTeamStore.selectedAgent.prompts?.length">
                       <div class="at-section-label">Prompts</div>
-                      <div class="at-prompts-list">
-                        <template x-for="[name, content] in $store.agentTeamStore.selectedPromptEntries" :key="name">
-                          <div class="at-prompt-item">
-                            <div class="at-prompt-name" x-text="name"></div>
-                            <div class="at-prompt-content" x-text="content"></div>
+                      <div class="at-section-content">
+                        <template x-for="prompt in $store.agentTeamStore.selectedAgent.prompts" :key="prompt.name">
+                          <div>
+                            <strong x-text="prompt.name + ':'"></strong>
+                            <code x-text="prompt.slug"></code>
                           </div>
                         </template>
                       </div>
+                    </div>
+
+                    <!-- Origin info -->
+                    <div class="at-section">
+                      <div class="at-section-label">Origin</div>
+                      <div class="at-section-content" x-text="$store.agentTeamStore.selectedAgent.origin || 'Not specified'"></div>
+                    </div>
+
+                    <!-- Team -->
+                    <div class="at-section" x-show="$store.agentTeamStore.selectedTeam">
+                      <div class="at-section-label">Team</div>
+                      <div class="at-section-content" x-text="$store.agentTeamStore.selectedTeam?.title || 'Unknown'"></div>
                     </div>
                   </div>
                 </template>
@@ -795,34 +797,32 @@
                 <!-- ===== CREATE MODE ===== -->
                 <template x-if="$store.agentTeamStore.editMode === 'create'">
                   <div>
-                    <h3 style="margin:0 0 12px; font-size:16px; color:var(--text-color,#eee);">Create Agent</h3>
+                    <h3 style="margin:0 0 12px; font-size:16px; color:var(--text-color,#eee);">Create New Agent</h3>
 
                     <form class="at-form" @submit.prevent="$store.agentTeamStore.saveCreate()">
                       <div class="at-form-group">
-                        <label>Agent Name</label>
-                        <input type="text" x-model="$store.agentTeamStore.form.name"
-                          placeholder="e.g., code-reviewer"
-                          @input="$store.agentTeamStore.updateSlugPreview()">
-                        <div class="at-slug-preview" x-show="$store.agentTeamStore.slugPreview"
-                          x-text="'Will be saved as: ' + $store.agentTeamStore.slugPreview"></div>
+                        <label>Name <span style="color:#e74c3c;">*</span></label>
+                        <input type="text" x-model="$store.agentTeamStore.form.name" required
+                          placeholder="my_custom_agent">
+                        <span class="at-slug-preview" x-show="$store.agentTeamStore.form.name">
+                          ID: <span x-text="$store.agentTeamStore.form.name.toLowerCase().replace(/\\s+/g, '_').replace(/[^a-z0-9_]/g, '')"></span>
+                        </span>
                       </div>
 
                       <div class="at-form-group">
                         <label>Title <span style="color:var(--text-muted,#666);">(optional)</span></label>
                         <input type="text" x-model="$store.agentTeamStore.form.title"
-                          placeholder="e.g., Code Reviewer">
+                          placeholder="My Custom Agent">
                       </div>
 
                       <div class="at-form-group">
                         <label>Description <span style="color:var(--text-muted,#666);">(optional)</span></label>
-                        <textarea x-model="$store.agentTeamStore.form.description"
-                          placeholder="What this agent does..."></textarea>
+                        <textarea x-model="$store.agentTeamStore.form.description"></textarea>
                       </div>
 
                       <div class="at-form-group">
                         <label>Context <span style="color:var(--text-muted,#666);">(optional)</span></label>
-                        <textarea x-model="$store.agentTeamStore.form.context"
-                          placeholder="Additional context for this agent..."></textarea>
+                        <textarea x-model="$store.agentTeamStore.form.context"></textarea>
                       </div>
 
                       <div class="at-form-group">
@@ -849,7 +849,7 @@
                       </div>
 
                       <div class="at-form-actions">
-                        <button type="submit" class="at-btn at-btn-primary">Create</button>
+                        <button type="submit" class="at-btn at-btn-primary">Create Agent</button>
                         <button type="button" class="at-btn at-btn-secondary"
                           @click="$store.agentTeamStore.cancelEdit()">Cancel</button>
                       </div>
@@ -984,7 +984,6 @@
         }
       }
     }
-  </script>
   </script>
 </body>
 
