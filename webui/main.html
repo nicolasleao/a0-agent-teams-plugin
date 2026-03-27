@@ -962,9 +962,8 @@
         },
 
         get paginatedProjects() {
-          const start = (this.currentPage - 1) * this.projectsPerPage;
-          const end = start + this.projectsPerPage;
-          return this.filteredProjects.slice(start, end);
+          // Return all projects (no pagination since we removed pagination UI)
+          return this.filteredProjects;
         },
 
         get totalPages() {
