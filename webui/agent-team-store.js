@@ -138,6 +138,16 @@ export const store = createStore("agentTeamStore", {
 
     const teamId = this.selectedTeam?.id || "global";
 
+    // Convert prompts array [{name, content}] to object {name: content}
+    const promptsObj = {};
+    if (Array.isArray(this.form.prompts)) {
+      this.form.prompts.forEach(p => {
+        if (p.name) {
+          promptsObj[p.name] = p.content || "";
+        }
+      });
+    }
+
     this.loading = true;
     try {
       const response = await API.callJsonApi(AGENT_TEAM_API, {
@@ -149,7 +159,7 @@ export const store = createStore("agentTeamStore", {
           description: this.form.description,
           context: this.form.context,
           enabled: this.form.enabled,
-          prompts: this.form.prompts,
+          prompts: promptsObj,
         },
       });
       if (response.ok) {
@@ -203,13 +213,21 @@ export const store = createStore("agentTeamStore", {
   openEdit() {
     if (!this.selectedAgent) return;
     this.editMode = "edit";
+    
+    // Convert prompts object {name: content} to array [{name, content}]
+    const promptsObj = this.selectedAgent.prompts || {};
+    const promptsArray = Object.entries(promptsObj).map(([name, content]) => ({
+      name: name,
+      content: content
+    }));
+    
     this.form = {
       name: this.selectedAgent.name,
       title: this.selectedAgent.title || "",
       description: this.selectedAgent.description || "",
       context: this.selectedAgent.context || "",
       enabled: this.selectedAgent.enabled !== false,
-      prompts: { ...(this.selectedAgent.prompts || {}) },
+      prompts: promptsArray,
     };
   },
 
@@ -228,7 +246,7 @@ export const store = createStore("agentTeamStore", {
       description: "",
       context: "",
       enabled: true,
-      prompts: {},
+      prompts: [], // Initialize as array for the form
     };
     this.newPromptName = "";
   },
@@ -238,22 +256,26 @@ export const store = createStore("agentTeamStore", {
     let name = this.newPromptName.trim();
     if (!name) return;
     if (!name.endsWith(".md")) name += ".md";
-    if (this.form.prompts[name] !== undefined) {
+    // Check if prompt with this name already exists (array format)
+    if (this.form.prompts.some(p => p.name === name)) {
       toast("Prompt file already exists", "warning");
       return;
     }
-    this.form.prompts = { ...this.form.prompts, [name]: "" };
+    // Add new prompt to array
+    this.form.prompts.push({ name: name, content: "" });
     this.newPromptName = "";
   },
 
-  removePrompt(name) {
-    const copy = { ...this.form.prompts };
-    delete copy[name];
-    this.form.prompts = copy;
+  removePrompt(index) {
+    if (typeof index === 'number' && index >= 0 && index < this.form.prompts.length) {
+      this.form.prompts.splice(index, 1);
+    }
   },
 
-  updatePromptContent(name, content) {
-    this.form.prompts = { ...this.form.prompts, [name]: content };
+  updatePromptContent(index, content) {
+    if (typeof index === 'number' && index >= 0 && index < this.form.prompts.length) {
+      this.form.prompts[index].content = content;
+    }
   },
 
   // --- Helpers ---
